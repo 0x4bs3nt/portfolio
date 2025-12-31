@@ -1,4 +1,6 @@
 ---
+import { ViewTransitions } from "astro:transitions";
+
 interface Props {
   title?: string;
   description?: string;
@@ -70,6 +72,7 @@ const fullTitle = title === "4bs3nt" ? title : `${title} - 4bs3nt`;
       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
+    <ViewTransitions />
   </head>
   <body>
     <slot />
