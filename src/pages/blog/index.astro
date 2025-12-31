@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-import BlogSearch from "../../components/BlogSearch";
 import "../../components/BlogSearch.css";
 import { getAllTags, formatDate } from "../../utils/blog";
 
@@ -25,7 +24,6 @@ const currentYear = new Date().getFullYear();
     <div class="main">
       <header class="header">
         <h1>blog</h1>
-        <p class="subtitle">technical writing, thoughts, and explorations</p>
       </header>
 
       {
@@ -41,7 +39,36 @@ const currentYear = new Date().getFullYear();
         )
       }
 
-      <BlogSearch client:load posts={posts} />
+      <div class="posts">
+        {
+          posts.map((post) => (
+            <article class="post-card">
+              <time
+                class="post-date"
+                datetime={new Date(post.data.date).toISOString()}
+              >
+                Published on {formatDate(post.data.date)}
+              </time>
+              <h2 class="post-title">
+                <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+              </h2>
+              {post.data.tags && post.data.tags.length > 0 && (
+                <div class="post-tags">
+                  {post.data.tags.map((tag) => (
+                    <a href={`/blog/tags/${tag}`} class="tag">
+                      [{tag}]
+                    </a>
+                  ))}
+                </div>
+              )}
+              <p class="post-description">{post.data.description}</p>
+              <a href={`/blog/${post.slug}`} class="read-more">
+                Read more →
+              </a>
+            </article>
+          ))
+        }
+      </div>
     </div>
 
     <footer class="footer">
@@ -95,13 +122,12 @@ const currentYear = new Date().getFullYear();
   }
 
   .header {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
 
   .header h1 {
     font-size: 1.5rem;
     font-weight: 600;
-    margin-bottom: 0.5rem;
   }
 
   .subtitle {
@@ -122,7 +148,7 @@ const currentYear = new Date().getFullYear();
     font-size: 0.9rem;
   }
 
-  .tag {
+  .tags .tag {
     color: var(--accent);
     font-size: 0.9rem;
     text-transform: uppercase;
