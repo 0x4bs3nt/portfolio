@@ -1,20 +1,24 @@
 ---
-import { getCollection } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
-import TableOfContents from '../../components/TableOfContents.astro';
-import { formatDate, getReadingTime, getTableOfContents } from '../../utils/blog';
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import TableOfContents from "../../components/TableOfContents.astro";
+import {
+  formatDate,
+  getReadingTime,
+  getTableOfContents,
+} from "../../utils/blog";
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
-  return posts.map(post => ({
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
     params: { slug: post.slug },
     props: { post },
   }));
 }
 
 interface Props {
-  post: CollectionEntry<'blog'>;
+  post: CollectionEntry<"blog">;
 }
 
 const { post } = Astro.props;
@@ -56,13 +60,17 @@ const tableOfContents = getTableOfContents(rawContent);
           </div>
           <h1 class="post-title">{post.data.title}</h1>
           <p class="post-description">{post.data.description}</p>
-          {post.data.tags && post.data.tags.length > 0 && (
-            <div class="post-tags">
-              {post.data.tags.map(tag => (
-                <a href={`/blog/tags/${tag}`} class="tag">{tag}</a>
-              ))}
-            </div>
-          )}
+          {
+            post.data.tags && post.data.tags.length > 0 && (
+              <div class="post-tags">
+                {post.data.tags.map((tag) => (
+                  <a href={`/blog/tags/${tag}`} class="tag">
+                    {tag}
+                  </a>
+                ))}
+              </div>
+            )
+          }
         </header>
 
         <TableOfContents headings={tableOfContents} />
@@ -127,7 +135,7 @@ const tableOfContents = getTableOfContents(rawContent);
   }
 
   .nav-links a::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -4px;
     left: 0;
@@ -300,7 +308,7 @@ const tableOfContents = getTableOfContents(rawContent);
   }
 
   .post-content :global(code) {
-    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-family: "Consolas", "Monaco", "Courier New", monospace;
     font-size: 0.9em;
     background: rgba(28, 25, 23, 0.05);
     padding: 0.2em 0.4em;

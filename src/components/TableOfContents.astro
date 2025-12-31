@@ -1,5 +1,5 @@
 ---
-import type { TocItem } from '../utils/blog';
+import type { TocItem } from "../utils/blog";
 
 interface Props {
   headings: TocItem[];
@@ -15,11 +15,13 @@ if (headings.length === 0) {
 <nav class="toc">
   <h3 class="toc-title">Table of Contents</h3>
   <ul class="toc-list">
-    {headings.map((heading) => (
-      <li class={`toc-item depth-${heading.depth}`}>
-        <a href={`#${heading.slug}`}>{heading.text}</a>
-      </li>
-    ))}
+    {
+      headings.map((heading) => (
+        <li class={`toc-item depth-${heading.depth}`}>
+          <a href={`#${heading.slug}`}>{heading.text}</a>
+        </li>
+      ))
+    }
   </ul>
 </nav>
 

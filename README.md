@@ -4,14 +4,16 @@ A modern, fast, and elegant personal portfolio website with a fully-featured blo
 
 ## Features
 
-### 🎨 Design
+### Design
+
 - Clean, minimalist aesthetic with refined typography
 - Newsreader serif headings + DM Sans body text
 - Smooth animations and transitions
 - Fully responsive design
 - Subtle background textures
 
-### 📝 Blog Features
+### Blog Features
+
 - **Content Collections** - Write posts as Markdown files
 - **Syntax Highlighting** - Powered by Shiki (VS Code's highlighter)
 - **Reading Time** - Automatic calculation
@@ -21,7 +23,8 @@ A modern, fast, and elegant personal portfolio website with a fully-featured blo
 - **RSS Feed** - Syndication support at `/rss.xml`
 - **SEO Optimized** - Complete meta tags (Open Graph, Twitter Cards)
 
-### 🚀 Performance
+### Performance
+
 - Zero JavaScript by default (Islands Architecture)
 - Optimized builds
 - Fast page loads
@@ -29,6 +32,7 @@ A modern, fast, and elegant personal portfolio website with a fully-featured blo
 ## Getting Started
 
 ### Prerequisites
+
 - [Node.js](https://nodejs.org/) 18+ or [Bun](https://bun.sh/)
 
 ### Installation
@@ -102,13 +106,13 @@ More content...
 
 ### Frontmatter Fields
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `title` | string | ✅ | Post title |
-| `description` | string | ✅ | Post description (used in SEO) |
-| `date` | date | ✅ | Publish date (YYYY-MM-DD) |
-| `tags` | array | ❌ | Array of tags |
-| `draft` | boolean | ❌ | Set to `true` to hide from production |
+| Field         | Type    | Required | Description                           |
+| ------------- | ------- | -------- | ------------------------------------- |
+| `title`       | string  | ✅       | Post title                            |
+| `description` | string  | ✅       | Post description (used in SEO)        |
+| `date`        | date    | ✅       | Publish date (YYYY-MM-DD)             |
+| `tags`        | array   | ❌       | Array of tags                         |
+| `draft`       | boolean | ❌       | Set to `true` to hide from production |
 
 ### Markdown Features
 
@@ -125,7 +129,7 @@ Use triple backticks with language identifier:
 
 \`\`\`javascript
 function hello() {
-  console.log("Hello, world!");
+console.log("Hello, world!");
 }
 \`\`\`
 
@@ -134,10 +138,12 @@ function hello() {
 ### Updating Personal Information
 
 **Homepage** (`src/pages/index.astro:18`)
+
 - Replace `"Your Name"` with your actual name
 - Update the subtitle and about text
 
 **Site Metadata** (`src/layouts/Layout.astro:12-13`)
+
 - Update default title and description
 
 ### Color Scheme
@@ -159,8 +165,8 @@ Edit CSS variables in `src/layouts/Layout.astro:72-77`:
 Change font imports in `src/layouts/Layout.astro:61-63` and update CSS variables:
 
 ```css
---font-serif: 'Newsreader', Georgia, serif;
---font-sans: 'DM Sans', system-ui, sans-serif;
+--font-serif: "Newsreader", Georgia, serif;
+--font-sans: "DM Sans", system-ui, sans-serif;
 ```
 
 ### Syntax Highlighting Theme
@@ -184,18 +190,19 @@ Update `astro.config.mjs`:
 
 ```javascript
 export default defineConfig({
-  site: 'https://yourdomain.com',  // Add this line
+  site: "https://yourdomain.com", // Add this line
   integrations: [react()],
   markdown: {
     shikiConfig: {
-      theme: 'github-light',
-      wrap: true
-    }
-  }
+      theme: "github-light",
+      wrap: true,
+    },
+  },
 });
 ```
 
 This is **required** for:
+
 - Proper RSS feed URLs
 - Correct canonical URLs
 - Social media meta tags
@@ -203,6 +210,7 @@ This is **required** for:
 ### 2. Add Open Graph Image (Optional)
 
 Create a social sharing image:
+
 - Add `og-image.jpg` (1200x630px) to `public/` folder
 - Or update the default in `src/layouts/Layout.astro:14`
 
@@ -254,6 +262,7 @@ This creates a `dist/` folder with optimized static files.
 ### Other Platforms
 
 Astro works with any static hosting:
+
 - GitHub Pages
 - AWS S3 + CloudFront
 - DigitalOcean App Platform
@@ -264,12 +273,12 @@ See [Astro deployment docs](https://docs.astro.build/en/guides/deploy/) for plat
 
 ## Available Commands
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start dev server at `localhost:4321` |
-| `npm run build` | Build production site to `dist/` |
-| `npm run preview` | Preview production build locally |
-| `npm run astro` | Run Astro CLI commands |
+| Command           | Description                          |
+| ----------------- | ------------------------------------ |
+| `npm run dev`     | Start dev server at `localhost:4321` |
+| `npm run build`   | Build production site to `dist/`     |
+| `npm run preview` | Preview production build locally     |
+| `npm run astro`   | Run Astro CLI commands               |
 
 ## Environment Variables (Optional)
 
@@ -322,4 +331,4 @@ For Astro-specific questions, see the [Astro documentation](https://docs.astro.b
 
 ---
 
-Built with ❤️ using Astro
+Built with Astro

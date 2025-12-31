@@ -3,25 +3,24 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
-  type?: 'website' | 'article';
+  type?: "website" | "article";
   publishedTime?: Date;
   tags?: string[];
 }
 
 const {
-  title = "Portfolio",
-  description = "Developer, designer, and creator of things on the internet.",
+  title = "portfolio",
+  description = "Developer, hacker, builder of things.",
   image = "/og-image.jpg",
   type = "website",
   publishedTime,
-  tags = []
+  tags = [],
 } = Astro.props;
 
-// Use site URL if configured, otherwise use localhost for development
 const siteUrl = Astro.site?.href || `http://localhost:4321`;
 const canonicalURL = new URL(Astro.url.pathname, siteUrl);
 const socialImage = new URL(image, siteUrl);
-const fullTitle = title === "Portfolio" ? title : `${title} | Portfolio`;
+const fullTitle = title === "portfolio" ? title : `${title} - portfolio`;
 ---
 
 <!doctype html>
@@ -32,38 +31,30 @@ const fullTitle = title === "Portfolio" ? title : `${title} | Portfolio`;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
 
-    <!-- Primary Meta Tags -->
     <title>{fullTitle}</title>
     <meta name="title" content={fullTitle} />
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
 
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content={type} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={socialImage} />
     {publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
-    {tags.map(tag => <meta property="article:tag" content={tag} />)}
+    {tags.map((tag) => <meta property="article:tag" content={tag} />)}
 
-    <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={fullTitle} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={socialImage} />
 
-    <!-- RSS Feed -->
     <link rel="alternate" type="application/rss+xml" title="Blog RSS Feed" href="/rss.xml" />
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   </head>
   <body>
     <slot />
@@ -72,16 +63,11 @@ const fullTitle = title === "Portfolio" ? title : `${title} | Portfolio`;
 
 <style is:global>
   :root {
-    --color-bg: #fafaf9;
-    --color-text: #1c1917;
-    --color-text-muted: #57534e;
-    --color-accent: #0c4a6e;
-    --color-border: #e7e5e4;
-
-    --font-serif: 'Newsreader', Georgia, serif;
-    --font-sans: 'DM Sans', system-ui, sans-serif;
-
-    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --bg: #000000;
+    --fg: #e5e7eb;
+    --fg-muted: #9ca3af;
+    --accent: #ec4899;
+    --border: #374151;
   }
 
   * {
@@ -91,31 +77,29 @@ const fullTitle = title === "Portfolio" ? title : `${title} | Portfolio`;
   }
 
   html {
-    background: var(--color-bg);
-    color: var(--color-text);
-    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
     line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
     min-height: 100vh;
-    position: relative;
   }
 
-  /* Subtle texture overlay */
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image:
-      radial-gradient(circle at 20% 80%, rgba(12, 74, 110, 0.03) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(120, 113, 108, 0.02) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: -1;
+  ::selection {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  a:hover {
+    opacity: 0.8;
   }
 </style>

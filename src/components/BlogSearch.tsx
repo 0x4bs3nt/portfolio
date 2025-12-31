@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo } from "react";
 
 interface Post {
   slug: string;
@@ -15,26 +15,30 @@ interface BlogSearchProps {
 }
 
 export default function BlogSearch({ posts }: BlogSearchProps) {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const filteredPosts = useMemo(() => {
     if (!searchQuery.trim()) return posts;
 
     const query = searchQuery.toLowerCase();
-    return posts.filter(post => {
+    return posts.filter((post) => {
       const titleMatch = post.data.title.toLowerCase().includes(query);
-      const descriptionMatch = post.data.description.toLowerCase().includes(query);
-      const tagMatch = post.data.tags?.some(tag => tag.toLowerCase().includes(query));
+      const descriptionMatch = post.data.description
+        .toLowerCase()
+        .includes(query);
+      const tagMatch = post.data.tags?.some((tag) =>
+        tag.toLowerCase().includes(query),
+      );
 
       return titleMatch || descriptionMatch || tagMatch;
     });
   }, [searchQuery, posts]);
 
   const formatDate = (date: Date) => {
-    return new Intl.DateTimeFormat('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+    return new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     }).format(new Date(date));
   };
 
@@ -66,7 +70,7 @@ export default function BlogSearch({ posts }: BlogSearchProps) {
         />
         {searchQuery && (
           <button
-            onClick={() => setSearchQuery('')}
+            onClick={() => setSearchQuery("")}
             className="clear-button"
             aria-label="Clear search"
           >
@@ -77,27 +81,35 @@ export default function BlogSearch({ posts }: BlogSearchProps) {
 
       {searchQuery && (
         <p className="search-results-count">
-          Found {filteredPosts.length} {filteredPosts.length === 1 ? 'post' : 'posts'}
+          Found {filteredPosts.length}{" "}
+          {filteredPosts.length === 1 ? "post" : "posts"}
         </p>
       )}
 
       <div className="posts">
         {filteredPosts.map((post) => (
           <article key={post.slug} className="post-card">
-            <a href={`/blog/${post.slug}`} className="post-link">
-              <time className="post-date" dateTime={new Date(post.data.date).toISOString()}>
-                {formatDate(post.data.date)}
-              </time>
-              <h2 className="post-title">{post.data.title}</h2>
-              <p className="post-description">{post.data.description}</p>
-              {post.data.tags && post.data.tags.length > 0 && (
-                <div className="post-tags">
-                  {post.data.tags.map(tag => (
-                    <span key={tag} className="tag">{tag}</span>
-                  ))}
-                </div>
-              )}
-              <span className="read-more">Read more →</span>
+            <time
+              className="post-date"
+              dateTime={new Date(post.data.date).toISOString()}
+            >
+              Published on {formatDate(post.data.date)}
+            </time>
+            <h2 className="post-title">
+              <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+            </h2>
+            {post.data.tags && post.data.tags.length > 0 && (
+              <div className="post-tags">
+                {post.data.tags.map((tag) => (
+                  <a key={tag} href={`/blog/tags/${tag}`} className="tag">
+                    [{tag}]
+                  </a>
+                ))}
+              </div>
+            )}
+            <p className="post-description">{post.data.description}</p>
+            <a href={`/blog/${post.slug}`} className="read-more">
+              Read more →
             </a>
           </article>
         ))}
@@ -106,7 +118,7 @@ export default function BlogSearch({ posts }: BlogSearchProps) {
       {searchQuery && filteredPosts.length === 0 && (
         <div className="no-results">
           <p>No posts found matching "{searchQuery}"</p>
-          <button onClick={() => setSearchQuery('')} className="reset-button">
+          <button onClick={() => setSearchQuery("")} className="reset-button">
             Clear search
           </button>
         </div>

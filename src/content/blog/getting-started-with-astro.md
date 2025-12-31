@@ -34,6 +34,7 @@ const greeting = "Hello, world!";
 ## Next Steps
 
 In future posts, I'll dive deeper into:
+
 - Content Collections (which powers this very blog!)
 - Adding interactive components
 - Optimizing for performance

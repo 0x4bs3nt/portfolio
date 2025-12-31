@@ -29,8 +29,8 @@ export function getTableOfContents(content: string): TocItem[] {
     const text = match[2].trim();
     const slug = text
       .toLowerCase()
-      .replace(/[^\w\s-]/g, '')
-      .replace(/\s+/g, '-');
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-");
 
     headings.push({ text, slug, depth });
   }
@@ -42,10 +42,10 @@ export function getTableOfContents(content: string): TocItem[] {
  * Format date for display
  */
 export function formatDate(date: Date): string {
-  return new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   }).format(date);
 }
 
@@ -54,7 +54,7 @@ export function formatDate(date: Date): string {
  */
 export function getAllTags(posts: any[]): string[] {
   const tags = new Set<string>();
-  posts.forEach(post => {
+  posts.forEach((post) => {
     if (post.data.tags) {
       post.data.tags.forEach((tag: string) => tags.add(tag));
     }

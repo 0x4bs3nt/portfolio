@@ -8,8 +8,8 @@ export default defineConfig({
   integrations: [react()],
   markdown: {
     shikiConfig: {
-      theme: 'github-light',
-      wrap: true
-    }
-  }
+      theme: "github-light",
+      wrap: true,
+    },
+  },
 });

@@ -12,6 +12,7 @@ This is my first blog post! I'm excited to start sharing my thoughts, experience
 ## Why I Started This Blog
 
 I've always wanted a space to:
+
 - Document my learning journey
 - Share solutions to problems I've encountered
 - Connect with other developers
@@ -20,6 +21,7 @@ I've always wanted a space to:
 ## What to Expect
 
 I'll be writing about various topics including:
+
 - Web development tutorials
 - Framework deep-dives (especially Astro!)
 - Project showcases

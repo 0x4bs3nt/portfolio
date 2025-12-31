@@ -12,6 +12,7 @@ Astro's Content Collections are a game-changer for managing markdown content. Le
 ## What Are Content Collections?
 
 Content Collections provide:
+
 - **Type-safe frontmatter** - Define schemas with Zod
 - **Automatic routing** - No manual page creation needed
 - **Performance** - Content is processed at build time
@@ -22,10 +23,10 @@ Content Collections provide:
 First, define your schema in `src/content/config.ts`:
 
 ```typescript
-import { defineCollection, z } from 'astro:content';
+import { defineCollection, z } from "astro:content";
 
 const blog = defineCollection({
-  type: 'content',
+  type: "content",
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -42,9 +43,9 @@ Then query your posts in any Astro page:
 
 ```astro
 ---
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
 
-const posts = await getCollection('blog');
+const posts = await getCollection("blog");
 ---
 ```
 
