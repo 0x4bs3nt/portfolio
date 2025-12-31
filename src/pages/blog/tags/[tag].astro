@@ -1,0 +1,318 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import { formatDate, getAllTags } from '../../../utils/blog';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+  const publishedPosts = allPosts.filter(post => !post.data.draft);
+  const allTags = getAllTags(publishedPosts);
+
+  return allTags.map(tag => ({
+    params: { tag },
+    props: {
+      posts: publishedPosts
+        .filter(post => post.data.tags?.includes(tag))
+        .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+    }
+  }));
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<Layout title={`Posts tagged "${tag}"`} description={`All blog posts tagged with ${tag}`}>
+  <div class="container">
+    <nav class="nav">
+      <a href="/" class="logo">Portfolio</a>
+      <div class="nav-links">
+        <a href="/blog">Blog</a>
+        <a href="/contact">Contact</a>
+      </div>
+    </nav>
+
+    <main class="main">
+      <a href="/blog" class="back-link">← Back to all posts</a>
+
+      <header class="page-header">
+        <h1>Posts tagged <span class="tag-name">"{tag}"</span></h1>
+        <p>{posts.length} {posts.length === 1 ? 'post' : 'posts'} found</p>
+      </header>
+
+      <div class="posts">
+        {posts.map((post) => (
+          <article class="post-card">
+            <a href={`/blog/${post.slug}`} class="post-link">
+              <time class="post-date" datetime={post.data.date.toISOString()}>
+                {formatDate(post.data.date)}
+              </time>
+              <h2 class="post-title">{post.data.title}</h2>
+              <p class="post-description">{post.data.description}</p>
+              {post.data.tags && post.data.tags.length > 0 && (
+                <div class="post-tags">
+                  {post.data.tags.map(t => (
+                    <span class={`tag ${t === tag ? 'active' : ''}`}>{t}</span>
+                  ))}
+                </div>
+              )}
+              <span class="read-more">Read more →</span>
+            </a>
+          </article>
+        ))}
+      </div>
+    </main>
+  </div>
+</Layout>
+
+<style>
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    min-height: 100vh;
+  }
+
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 3rem;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--color-border);
+    animation: fadeInDown 0.6s var(--ease-smooth);
+  }
+
+  .logo {
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--color-text);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+    transition: color 0.3s var(--ease-smooth);
+  }
+
+  .logo:hover {
+    color: var(--color-accent);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .nav-links a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    position: relative;
+    transition: color 0.3s var(--ease-smooth);
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--color-accent);
+    transition: width 0.3s var(--ease-smooth);
+  }
+
+  .nav-links a:hover {
+    color: var(--color-text);
+  }
+
+  .nav-links a:hover::after {
+    width: 100%;
+  }
+
+  .back-link {
+    display: inline-block;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-size: 0.9375rem;
+    margin-bottom: 2rem;
+    transition: all 0.3s var(--ease-smooth);
+    animation: fadeIn 0.7s var(--ease-smooth) 0.1s backwards;
+  }
+
+  .back-link:hover {
+    color: var(--color-accent);
+    transform: translateX(-4px);
+  }
+
+  .page-header {
+    margin-bottom: 3rem;
+    animation: fadeInUp 0.7s var(--ease-smooth) 0.1s backwards;
+  }
+
+  .page-header h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .tag-name {
+    color: var(--color-accent);
+    font-style: italic;
+  }
+
+  .page-header p {
+    color: var(--color-text-muted);
+    font-size: 1.0625rem;
+  }
+
+  .posts {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .post-card {
+    animation: fadeInUp 0.7s var(--ease-smooth) backwards;
+  }
+
+  .post-card:nth-child(1) { animation-delay: 0.2s; }
+  .post-card:nth-child(2) { animation-delay: 0.25s; }
+  .post-card:nth-child(3) { animation-delay: 0.3s; }
+
+  .post-link {
+    display: block;
+    text-decoration: none;
+    padding: 1.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    background: white;
+    transition: all 0.3s var(--ease-smooth);
+  }
+
+  .post-link:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
+  }
+
+  .post-date {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .post-title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+
+  .post-description {
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .tag {
+    font-size: 0.8125rem;
+    color: var(--color-accent);
+    background: rgba(12, 74, 110, 0.08);
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  .tag.active {
+    background: var(--color-accent);
+    color: white;
+  }
+
+  .read-more {
+    display: inline-block;
+    font-size: 0.9375rem;
+    color: var(--color-accent);
+    font-weight: 500;
+    transition: transform 0.3s var(--ease-smooth);
+  }
+
+  .post-link:hover .read-more {
+    transform: translateX(4px);
+  }
+
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .container {
+      padding: 1.5rem 1rem;
+    }
+
+    .nav {
+      padding-bottom: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .nav-links {
+      gap: 1.5rem;
+    }
+
+    .page-header {
+      margin-bottom: 2rem;
+    }
+
+    .posts {
+      gap: 2rem;
+    }
+
+    .post-link {
+      padding: 1.5rem;
+    }
+
+    .post-title {
+      font-size: 1.25rem;
+    }
+  }
+</style>
