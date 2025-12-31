@@ -9,7 +9,7 @@ interface Props {
 }
 
 const {
-  title = "portfolio",
+  title = "4bs3nt",
   description = "Developer, hacker, builder of things.",
   image = "/og-image.jpg",
   type = "website",
@@ -20,7 +20,7 @@ const {
 const siteUrl = Astro.site?.href || `http://localhost:4321`;
 const canonicalURL = new URL(Astro.url.pathname, siteUrl);
 const socialImage = new URL(image, siteUrl);
-const fullTitle = title === "portfolio" ? title : `${title} - portfolio`;
+const fullTitle = title === "4bs3nt" ? title : `${title} - 4bs3nt`;
 ---
 
 <!doctype html>
@@ -41,7 +41,14 @@ const fullTitle = title === "portfolio" ? title : `${title} - portfolio`;
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={socialImage} />
-    {publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
+    {
+      publishedTime && (
+        <meta
+          property="article:published_time"
+          content={publishedTime.toISOString()}
+        />
+      )
+    }
     {tags.map((tag) => <meta property="article:tag" content={tag} />)}
 
     <meta property="twitter:card" content="summary_large_image" />
@@ -50,11 +57,19 @@ const fullTitle = title === "portfolio" ? title : `${title} - portfolio`;
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={socialImage} />
 
-    <link rel="alternate" type="application/rss+xml" title="Blog RSS Feed" href="/rss.xml" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Blog RSS Feed"
+      href="/rss.xml"
+    />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <slot />
@@ -79,8 +94,8 @@ const fullTitle = title === "portfolio" ? title : `${title} - portfolio`;
   html {
     background: var(--bg);
     color: var(--fg);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 15px;
     line-height: 1.6;
   }
 

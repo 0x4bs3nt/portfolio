@@ -2,7 +2,7 @@
 title: "Content Collections Explained"
 description: "How Astro's Content Collections work and why they're perfect for blogs."
 date: 2025-01-25
-tags: ["astro", "content collections", "markdown"]
+tags: ["astro"]
 ---
 
 # Content Collections Explained
