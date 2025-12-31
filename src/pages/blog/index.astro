@@ -43,28 +43,32 @@ const currentYear = new Date().getFullYear();
         {
           posts.map((post) => (
             <article class="post-card">
-              <time
-                class="post-date"
-                datetime={new Date(post.data.date).toISOString()}
-              >
-                Published on {formatDate(post.data.date)}
-              </time>
-              <h2 class="post-title">
-                <a href={`/blog/${post.slug}`}>{post.data.title}</a>
-              </h2>
-              {post.data.tags && post.data.tags.length > 0 && (
-                <div class="post-tags">
-                  {post.data.tags.map((tag) => (
-                    <a href={`/blog/tags/${tag}`} class="tag">
-                      [{tag}]
-                    </a>
-                  ))}
-                </div>
-              )}
-              <p class="post-description">{post.data.description}</p>
-              <a href={`/blog/${post.slug}`} class="read-more">
-                Read more →
-              </a>
+              <div class="post-meta">
+                <time
+                  class="post-date"
+                  datetime={new Date(post.data.date).toISOString()}
+                >
+                  {formatDate(post.data.date)}
+                </time>
+              </div>
+              <div class="post-content">
+                <h2 class="post-title">
+                  <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+                </h2>
+                {post.data.tags && post.data.tags.length > 0 && (
+                  <div class="post-tags">
+                    {post.data.tags.map((tag) => (
+                      <a href={`/blog/tags/${tag}`} class="tag">
+                        {tag}
+                      </a>
+                    ))}
+                  </div>
+                )}
+                <p class="post-description">{post.data.description}</p>
+                <a href={`/blog/${post.slug}`} class="read-more">
+                  Read more →
+                </a>
+              </div>
             </article>
           ))
         }

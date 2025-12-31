@@ -62,24 +62,42 @@
 .posts {
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 0;
 }
 
 .post-card {
-  /* No borders, just whitespace */
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 3rem;
+  padding: 3rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.post-card:first-child {
+  padding-top: 0;
+}
+
+.post-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .post-date {
   font-size: 0.875rem;
   color: var(--fg-muted);
-  margin-bottom: 0.5rem;
   display: block;
+}
+
+.post-content {
+  display: flex;
+  flex-direction: column;
 }
 
 .post-title {
   font-size: 1.5rem;
   font-weight: 600;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
   line-height: 1.3;
 }
 
@@ -89,7 +107,7 @@
 }
 
 .post-title a:hover {
-  color: var(--accent);
+  color: var(--fg);
 }
 
 .post-description {
@@ -102,19 +120,21 @@
 .post-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 0.75rem;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
 }
 
-.tag {
-  font-size: 0.875rem;
+.post-tags .tag {
+  font-size: 0.75rem;
   color: var(--accent);
   text-decoration: none;
   text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
 }
 
-.tag:hover {
-  text-decoration: underline;
+.post-tags .tag:hover {
+  text-decoration: none;
 }
 
 .read-more {
@@ -158,11 +178,13 @@
     font-size: 0.85rem;
   }
 
-  .posts {
-    gap: 1.5rem;
+  .post-card {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 2rem 0;
   }
 
-  .post-card {
-    padding-bottom: 1.5rem;
+  .post-meta {
+    margin-bottom: 0.5rem;
   }
 }
