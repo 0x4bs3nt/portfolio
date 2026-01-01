@@ -63,7 +63,7 @@ const currentYear = new Date().getFullYear();
             post.data.tags && post.data.tags.length > 0 && (
               <div class="post-tags">
                 {post.data.tags.map((tag) => (
-                  <a href={`/blog/tags/${tag}`} class="tag">
+                  <a href={`/blog?tag=${tag}`} class="tag">
                     {tag}
                   </a>
                 ))}

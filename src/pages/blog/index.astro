@@ -2,7 +2,8 @@
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import "../../components/BlogSearch.css";
-import { getAllTags, formatDate } from "../../utils/blog";
+import { getAllTags } from "../../utils/blog";
+import BlogList from "../../components/BlogList";
 
 const allPosts = await getCollection("blog");
 const posts = allPosts
@@ -26,53 +27,7 @@ const currentYear = new Date().getFullYear();
         <h1>blog</h1>
       </header>
 
-      {
-        allTags.length > 0 && (
-          <div class="tags">
-            <span class="tags-label">tags:</span>
-            {allTags.map((tag) => (
-              <a href={`/blog/tags/${tag}`} class="tag">
-                {tag}
-              </a>
-            ))}
-          </div>
-        )
-      }
-
-      <div class="posts">
-        {
-          posts.map((post) => (
-            <article class="post-card">
-              <div class="post-meta">
-                <time
-                  class="post-date"
-                  datetime={new Date(post.data.date).toISOString()}
-                >
-                  {formatDate(post.data.date)}
-                </time>
-              </div>
-              <div class="post-content">
-                <h2 class="post-title">
-                  <a href={`/blog/${post.slug}`}>{post.data.title}</a>
-                </h2>
-                {post.data.tags && post.data.tags.length > 0 && (
-                  <div class="post-tags">
-                    {post.data.tags.map((tag) => (
-                      <a href={`/blog/tags/${tag}`} class="tag">
-                        {tag}
-                      </a>
-                    ))}
-                  </div>
-                )}
-                <p class="post-description">{post.data.description}</p>
-                <a href={`/blog/${post.slug}`} class="read-more">
-                  Read more →
-                </a>
-              </div>
-            </article>
-          ))
-        }
-      </div>
+      <BlogList client:load posts={posts} allTags={allTags} />
     </div>
 
     <footer class="footer">
