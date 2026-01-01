@@ -122,21 +122,26 @@
 }
 
 .post-card {
+  border-bottom: 1px solid var(--border);
+}
+
+.post-card:first-child .post-card-link {
+  padding-top: 0;
+}
+
+.post-card-link {
   display: grid;
   grid-template-columns: 150px 1fr;
   gap: 3rem;
   padding: 3rem 0;
-  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  color: inherit;
   cursor: pointer;
   transition: opacity 0.2s;
 }
 
-.post-card:hover {
+.post-card-link:hover {
   opacity: 0.8;
-}
-
-.post-card:first-child {
-  padding-top: 0;
 }
 
 .post-meta {
@@ -233,7 +238,7 @@
     font-size: 0.85rem;
   }
 
-  .post-card {
+  .post-card-link {
     grid-template-columns: 1fr;
     gap: 1rem;
     padding: 2rem 0;

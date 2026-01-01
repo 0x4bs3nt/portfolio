@@ -18,53 +18,101 @@ if (headings.length === 0) {
     {
       headings.map((heading) => (
         <li class={`toc-item depth-${heading.depth}`}>
-          <a href={`#${heading.slug}`}>{heading.text}</a>
+          <a href={`#${heading.slug}`} class="toc-link">{heading.text}</a>
         </li>
       ))
     }
   </ul>
 </nav>
 
+<script>
+  function updateActiveLink() {
+    const tocLinks = document.querySelectorAll(".toc-link");
+    const currentHash = window.location.hash;
+
+    tocLinks.forEach((link) => {
+      link.classList.remove("active");
+      if (link.getAttribute("href") === currentHash && currentHash) {
+        link.classList.add("active");
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const tocLinks = document.querySelectorAll(".toc-link");
+
+    // Set initial active state based on URL hash
+    updateActiveLink();
+
+    // Update active state when clicking TOC links
+    tocLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        setTimeout(updateActiveLink, 0);
+      });
+    });
+
+    // Update active state when hash changes
+    window.addEventListener("hashchange", updateActiveLink);
+  });
+</script>
+
 <style>
   .toc {
-    background: rgba(12, 74, 110, 0.04);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
+    border-left: 2px solid var(--border);
+    padding-left: 1.25rem;
   }
 
   .toc-title {
-    font-family: var(--font-serif);
-    font-size: 1rem;
+    font-size: 0.6875rem;
     font-weight: 600;
-    margin-bottom: 1rem;
-    color: var(--color-text);
+    margin-bottom: 1.25rem;
+    color: var(--fg-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
   }
 
   .toc-list {
     list-style: none;
     padding: 0;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
   }
 
   .toc-item {
-    margin-bottom: 0.5rem;
+    line-height: 1.4;
   }
 
   .toc-item.depth-3 {
     padding-left: 1rem;
+    margin-top: -0.25rem;
   }
 
   .toc-item a {
-    color: var(--color-text-muted);
+    color: var(--fg-muted);
     text-decoration: none;
-    font-size: 0.9375rem;
-    transition: color 0.3s var(--ease-smooth);
+    font-size: 0.875rem;
+    transition: color 0.2s;
     display: block;
+    line-height: 1.5;
   }
 
   .toc-item a:hover {
-    color: var(--color-accent);
+    color: var(--accent);
+  }
+
+  .toc-item a.active {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  @media (max-width: 768px) {
+    .toc {
+      border-left: none;
+      border-top: 2px solid var(--border);
+      padding-left: 0;
+      padding-top: 1.5rem;
+    }
   }
 </style>

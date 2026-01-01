@@ -100,45 +100,38 @@ export default function BlogList({ posts, allTags }: BlogListProps) {
 
       <div className={`posts ${isTransitioning ? "transitioning" : ""}`}>
         {filteredPosts.map((post) => (
-          <article
-            key={post.slug}
-            className="post-card"
-            onClick={(e) => {
-              // Don't navigate if clicking on a tag button
-              if ((e.target as HTMLElement).closest(".tag")) {
-                return;
-              }
-              window.location.href = `/blog/${post.slug}`;
-            }}
-          >
-            <div className="post-meta">
-              <time
-                className="post-date"
-                dateTime={new Date(post.data.date).toISOString()}
-              >
-                {formatDate(post.data.date)}
-              </time>
-            </div>
-            <div className="post-content">
-              <h2 className="post-title">{post.data.title}</h2>
-              {post.data.tags && post.data.tags.length > 0 && (
-                <div className="post-tags">
-                  {post.data.tags.map((tag) => (
-                    <button
-                      key={tag}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleTagClick(tag);
-                      }}
-                      className={`tag ${selectedTag === tag ? "active" : ""}`}
-                    >
-                      {tag}
-                    </button>
-                  ))}
-                </div>
-              )}
-              <p className="post-description">{post.data.description}</p>
-            </div>
+          <article key={post.slug} className="post-card">
+            <a href={`/blog/${post.slug}`} className="post-card-link">
+              <div className="post-meta">
+                <time
+                  className="post-date"
+                  dateTime={new Date(post.data.date).toISOString()}
+                >
+                  {formatDate(post.data.date)}
+                </time>
+              </div>
+              <div className="post-content">
+                <h2 className="post-title">{post.data.title}</h2>
+                {post.data.tags && post.data.tags.length > 0 && (
+                  <div className="post-tags">
+                    {post.data.tags.map((tag) => (
+                      <button
+                        key={tag}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          handleTagClick(tag);
+                        }}
+                        className={`tag ${selectedTag === tag ? "active" : ""}`}
+                      >
+                        {tag}
+                      </button>
+                    ))}
+                  </div>
+                )}
+                <p className="post-description">{post.data.description}</p>
+              </div>
+            </a>
           </article>
         ))}
       </div>
