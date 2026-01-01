@@ -23,7 +23,7 @@
   border: none;
   cursor: pointer;
   padding: 0;
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Rubik", sans-serif;
 }
 
 .tags .tag:hover {
@@ -71,7 +71,7 @@
   border: 1px solid var(--border);
   border-radius: 0;
   color: var(--fg);
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Rubik", sans-serif;
   font-size: 0.9rem;
 }
 
@@ -194,7 +194,7 @@
   border: none;
   cursor: pointer;
   padding: 0;
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Rubik", sans-serif;
 }
 
 .post-tags .tag:hover {
@@ -223,7 +223,7 @@
   border: 1px solid var(--border);
   padding: 0.5rem 1rem;
   border-radius: 0;
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Rubik", sans-serif;
   font-size: 0.9rem;
   cursor: pointer;
 }

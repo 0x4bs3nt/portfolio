@@ -69,10 +69,11 @@ const fullTitle = title === "4bs3nt" ? title : `${title} - 4bs3nt`;
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
     <ViewTransitions />
+    <slot name="head" />
   </head>
   <body>
     <slot />
@@ -97,10 +98,15 @@ const fullTitle = title === "4bs3nt" ? title : `${title} - 4bs3nt`;
   html {
     background: var(--bg);
     color: var(--fg);
-    font-family: "JetBrains Mono", monospace;
+    font-family: "Rubik", sans-serif;
     font-size: 15px;
     line-height: 1.6;
     scrollbar-gutter: stable;
+  }
+
+  code,
+  pre {
+    font-family: "JetBrains Mono", monospace;
   }
 
   body {

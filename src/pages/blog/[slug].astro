@@ -109,6 +109,7 @@ const currentYear = new Date().getFullYear();
     scroll-behavior: smooth;
   }
 
+
   .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -150,7 +151,7 @@ const currentYear = new Date().getFullYear();
     color: var(--fg-muted);
     text-decoration: none;
     font-size: 0.875rem;
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
     text-transform: lowercase;
     letter-spacing: 0.02em;
   }
@@ -235,8 +236,8 @@ const currentYear = new Date().getFullYear();
   /* Two-Column Layout */
   .post-body {
     display: grid;
-    grid-template-columns: 240px 1fr;
-    gap: 5rem;
+    grid-template-columns: 200px 1fr;
+    gap: 6rem;
     align-items: start;
   }
 
@@ -249,7 +250,8 @@ const currentYear = new Date().getFullYear();
   /* Post Content - Refined Typography */
   .post-content {
     min-width: 0;
-    max-width: 680px;
+    max-width: 770px;
+    margin-left: 2rem;
   }
 
   .post-content :global(*:first-child) {
