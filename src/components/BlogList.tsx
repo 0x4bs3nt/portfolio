@@ -51,12 +51,18 @@ export default function BlogList({ posts, allTags }: BlogListProps) {
     }).format(new Date(date));
   };
 
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
   const handleTagClick = (tag: string) => {
-    if (selectedTag === tag) {
-      setSelectedTag(null);
-    } else {
-      setSelectedTag(tag);
-    }
+    setIsTransitioning(true);
+    setTimeout(() => {
+      if (selectedTag === tag) {
+        setSelectedTag(null);
+      } else {
+        setSelectedTag(tag);
+      }
+      setTimeout(() => setIsTransitioning(false), 50);
+    }, 150);
   };
 
   return (
@@ -74,7 +80,10 @@ export default function BlogList({ posts, allTags }: BlogListProps) {
             </button>
           ))}
           {selectedTag && (
-            <button onClick={() => setSelectedTag(null)} className="tag clear">
+            <button
+              onClick={() => handleTagClick(selectedTag)}
+              className="tag clear"
+            >
               clear
             </button>
           )}
@@ -89,7 +98,7 @@ export default function BlogList({ posts, allTags }: BlogListProps) {
         </p>
       )}
 
-      <div className="posts">
+      <div className={`posts ${isTransitioning ? "transitioning" : ""}`}>
         {filteredPosts.map((post) => (
           <article
             key={post.slug}
@@ -137,7 +146,10 @@ export default function BlogList({ posts, allTags }: BlogListProps) {
       {selectedTag && filteredPosts.length === 0 && (
         <div className="no-results">
           <p>No posts found with tag "{selectedTag}"</p>
-          <button onClick={() => setSelectedTag(null)} className="clear-button">
+          <button
+            onClick={() => handleTagClick(selectedTag)}
+            className="clear-button"
+          >
             Clear filter
           </button>
         </div>
