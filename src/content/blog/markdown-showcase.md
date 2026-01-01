@@ -15,11 +15,11 @@ Brief paragraph with `inline code` to demonstrate basic styling.
 
 ### This Is a Much Longer Subheading to Test How Extended Titles Wrap and Display Across Multiple Lines
 
-Here's a longer paragraph that contains multiple sentences to demonstrate how body text flows and wraps. This paragraph includes **bold text**, _italic text_, and even ***bold italic text*** to show different emphasis styles. Sometimes you need longer content to truly see how the typography and spacing work together in a real-world scenario.
+Here's a longer paragraph that contains multiple sentences to demonstrate how body text flows and wraps. This paragraph includes **bold text**, _italic text_, and even **_bold italic text_** to show different emphasis styles. Sometimes you need longer content to truly see how the typography and spacing work together in a real-world scenario.
 
 ## Text Formatting
 
-You can use **bold** for emphasis, _italics_ for subtle emphasis, and ***both combined*** for maximum impact. You can also use ~~strikethrough~~ text when needed.
+You can use **bold** for emphasis, _italics_ for subtle emphasis, and **_both combined_** for maximum impact. You can also use ~~strikethrough~~ text when needed.
 
 Here's a paragraph with `inline code snippets` mixed with regular text. The inline code should stand out but not overwhelm the surrounding content.
 
@@ -110,6 +110,42 @@ for i in range(10):
     print(f"F({i}) = {fibonacci(i)}")
 ```
 
+### Code Block with Very Long Lines
+
+```javascript
+// This is a very long line of code that extends far beyond the normal viewport width to test horizontal scrolling behavior in code blocks
+const veryLongVariableName =
+  "This is a really long string value that goes on and on and on to demonstrate how the code block handles overflow and horizontal scrolling when lines exceed the container width";
+
+function anotherFunctionWithAReallyLongName(
+  parameterOne,
+  parameterTwo,
+  parameterThree,
+  parameterFour,
+  parameterFive,
+  parameterSix,
+) {
+  return (
+    parameterOne +
+    parameterTwo +
+    parameterThree +
+    parameterFour +
+    parameterFive +
+    parameterSix
+  );
+}
+
+// Another extremely long comment that just keeps going and going to show what happens when a single line of text in a code block is much wider than the available space
+const result = anotherFunctionWithAReallyLongName(
+  "value1",
+  "value2",
+  "value3",
+  "value4",
+  "value5",
+  "value6",
+);
+```
+
 ## Lists
 
 ### Unordered List
@@ -173,7 +209,7 @@ Another section.
 
 ## Combining Elements
 
-Here's a paragraph that **combines _multiple_ formatting** options including `inline code`, [links](https://example.com), and ***heavy emphasis***.
+Here's a paragraph that **combines _multiple_ formatting** options including `inline code`, [links](https://example.com), and **_heavy emphasis_**.
 
 ### Complex Example
 
@@ -197,21 +233,21 @@ const instance = new Component({
 
 ## Tables
 
-| Feature      | Support | Notes                          |
-| ------------ | ------- | ------------------------------ |
-| Headers      | ✓       | All levels H1-H6               |
-| Bold         | ✓       | Using ** or __                 |
-| Italic       | ✓       | Using * or _                   |
-| Code         | ✓       | Inline and blocks              |
-| Lists        | ✓       | Ordered and unordered          |
-| Links        | ✓       | Standard markdown syntax       |
-| Tables       | ✓       | As shown here                  |
+| Feature | Support | Notes                    |
+| ------- | ------- | ------------------------ |
+| Headers | ✓       | All levels H1-H6         |
+| Bold    | ✓       | Using \*\* or \_\_       |
+| Italic  | ✓       | Using \* or \_           |
+| Code    | ✓       | Inline and blocks        |
+| Lists   | ✓       | Ordered and unordered    |
+| Links   | ✓       | Standard markdown syntax |
+| Tables  | ✓       | As shown here            |
 
-| Short | Med      | This is a very long column header |
-| ----- | -------- | --------------------------------- |
-| A     | Data     | Extended data entry here          |
-| B     | More     | Additional information            |
-| C     | Even more| Complex nested information goes in this cell |
+| Short | Med       | This is a very long column header            |
+| ----- | --------- | -------------------------------------------- |
+| A     | Data      | Extended data entry here                     |
+| B     | More      | Additional information                       |
+| C     | Even more | Complex nested information goes in this cell |
 
 ## Edge Cases
 

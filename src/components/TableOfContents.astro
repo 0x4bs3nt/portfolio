@@ -18,7 +18,9 @@ if (headings.length === 0) {
     {
       headings.map((heading) => (
         <li class={`toc-item depth-${heading.depth}`}>
-          <a href={`#${heading.slug}`} class="toc-link">{heading.text}</a>
+          <a href={`#${heading.slug}`} class="toc-link">
+            {heading.text}
+          </a>
         </li>
       ))
     }

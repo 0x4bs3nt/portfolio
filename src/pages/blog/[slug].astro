@@ -102,13 +102,48 @@ const currentYear = new Date().getFullYear();
       </p>
     </footer>
   </div>
+
+  <button id="scroll-to-top" class="scroll-to-top" aria-label="Scroll to top">
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M12 19V5M5 12l7-7 7 7"></path>
+    </svg>
+  </button>
+
+  <script>
+    const scrollToTopBtn = document.getElementById("scroll-to-top");
+
+    // Show/hide button based on scroll position
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 300) {
+        scrollToTopBtn?.classList.add("visible");
+      } else {
+        scrollToTopBtn?.classList.remove("visible");
+      }
+    });
+
+    // Scroll to top on click
+    scrollToTopBtn?.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    });
+  </script>
 </Layout>
 
 <style>
   html {
     scroll-behavior: smooth;
   }
-
 
   .container {
     max-width: 1200px;
@@ -336,7 +371,7 @@ const currentYear = new Date().getFullYear();
 
   .post-content :global(code) {
     font-family: "JetBrains Mono", monospace;
-    font-size: 0.875em;
+    font-size: 0.9em;
     background: rgba(255, 255, 255, 0.05);
     padding: 0.25em 0.5em;
     color: var(--accent);
@@ -345,7 +380,7 @@ const currentYear = new Date().getFullYear();
 
   .post-content :global(pre) {
     background: rgba(255, 255, 255, 0.03);
-    padding: 1.5rem;
+    padding: 1rem;
     overflow-x: auto;
     margin: 2rem 0;
     border: 1px solid var(--border);
@@ -355,7 +390,7 @@ const currentYear = new Date().getFullYear();
   .post-content :global(pre code) {
     background: none;
     padding: 0;
-    font-size: 0.875rem;
+    font-size: 0.9rem;
     line-height: 1.7;
     color: var(--fg);
     border: none;
@@ -437,6 +472,46 @@ const currentYear = new Date().getFullYear();
 
   .footer a:hover {
     color: var(--accent);
+  }
+
+  /* Scroll to Top Button */
+  .scroll-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.3s,
+      visibility 0.3s,
+      transform 0.2s,
+      background 0.2s;
+    z-index: 1000;
+  }
+
+  .scroll-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .scroll-to-top:hover {
+    transform: translateY(-3px);
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  .scroll-to-top:active {
+    transform: translateY(-1px);
   }
 
   /* Responsive */
