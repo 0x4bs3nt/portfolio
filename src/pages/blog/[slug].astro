@@ -120,24 +120,40 @@ const currentYear = new Date().getFullYear();
   </button>
 
   <script>
-    const scrollToTopBtn = document.getElementById("scroll-to-top");
+    function initScrollToTop() {
+      const scrollToTopBtn = document.getElementById("scroll-to-top");
 
-    // Show/hide button based on scroll position
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 300) {
-        scrollToTopBtn?.classList.add("visible");
-      } else {
-        scrollToTopBtn?.classList.remove("visible");
-      }
-    });
+      if (!scrollToTopBtn) return;
 
-    // Scroll to top on click
-    scrollToTopBtn?.addEventListener("click", () => {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
+      // Remove existing listener if any
+      const newScrollHandler = () => {
+        if (window.scrollY > 300) {
+          scrollToTopBtn.classList.add("visible");
+        } else {
+          scrollToTopBtn.classList.remove("visible");
+        }
+      };
+
+      // Show/hide button based on scroll position
+      window.addEventListener("scroll", newScrollHandler);
+
+      // Scroll to top on click
+      scrollToTopBtn.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
       });
-    });
+
+      // Initial check for scroll position
+      newScrollHandler();
+    }
+
+    // Run on initial page load
+    document.addEventListener("DOMContentLoaded", initScrollToTop);
+
+    // Run after view transitions
+    document.addEventListener("astro:page-load", initScrollToTop);
   </script>
 </Layout>
 
