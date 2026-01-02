@@ -4,7 +4,10 @@ import Layout from "../layouts/Layout.astro";
 const currentYear = new Date().getFullYear();
 ---
 
-<Layout>
+<Layout
+  title="4bs3nt"
+  description="Software engineer and security researcher. Building open source tools and exploring the depths of code."
+>
   <div class="container">
     <nav class="nav">
       <a href="/">home</a>
@@ -103,6 +106,8 @@ const currentYear = new Date().getFullYear();
     margin: 0 auto;
     width: fit-content;
     letter-spacing: 0.2em;
+    transform-origin: center;
+    transition: transform 0.3s ease;
   }
 
   .main {
@@ -166,7 +171,23 @@ const currentYear = new Date().getFullYear();
     }
 
     .ascii-art {
-      font-size: 0.45rem;
+      font-size: 0.4rem;
+      letter-spacing: 0.08em;
+      transform: scale(1);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .ascii-art {
+      font-size: 0.32rem;
+      letter-spacing: 0.05em;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .ascii-art {
+      font-size: 0.28rem;
+      letter-spacing: 0.02em;
     }
   }
 </style>
