@@ -1,6 +1,15 @@
 import rss from "@astrojs/rss";
 import { getCollection } from "astro:content";
 
+// TODO: Check blog list design iterations
+// TODO: 404 page
+// TODO: sitemap
+// TODO: robots.txt
+// TODO: favicon
+// TODO: mobile responsiveness
+// TODO: check seo
+// TODO: check performance & lighthouse
+
 export async function GET(context) {
   const posts = await getCollection("blog");
   const publishedPosts = posts
