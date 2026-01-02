@@ -28,15 +28,13 @@ const { posts } = Astro.props;
 >
   <div class="container">
     <nav class="nav">
-      <a href="/" class="logo">Portfolio</a>
-      <div class="nav-links">
-        <a href="/blog">Blog</a>
-        <a href="/contact">Contact</a>
-      </div>
+      <a href="/">home</a>
+      <a href="/blog">blog</a>
+      <a href="/contact">contact</a>
     </nav>
 
     <main class="main">
-      <a href="/blog" class="back-link">← Back to all posts</a>
+      <a href="/blog" class="back-link">← back to all posts</a>
 
       <header class="page-header">
         <h1>Posts tagged <span class="tag-name">"{tag}"</span></h1>
@@ -82,83 +80,45 @@ const { posts } = Astro.props;
 
   .nav {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 3rem;
+    gap: 1.5rem;
     margin-bottom: 3rem;
-    border-bottom: 1px solid var(--color-border);
-    animation: fadeInDown 0.6s var(--ease-smooth);
+    font-size: 1rem;
   }
 
-  .logo {
-    font-family: var(--font-serif);
-    font-size: 1.125rem;
+  .nav a:first-child {
+    margin-right: auto;
+  }
+
+  .nav a {
+    color: var(--fg);
     font-weight: 500;
-    color: var(--color-text);
-    text-decoration: none;
-    letter-spacing: -0.01em;
-    transition: color 0.3s var(--ease-smooth);
   }
 
-  .logo:hover {
-    color: var(--color-accent);
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 2rem;
-  }
-
-  .nav-links a {
-    color: var(--color-text-muted);
-    text-decoration: none;
-    font-size: 0.9375rem;
-    font-weight: 500;
-    position: relative;
-    transition: color 0.3s var(--ease-smooth);
-  }
-
-  .nav-links a::after {
-    content: "";
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background: var(--color-accent);
-    transition: width 0.3s var(--ease-smooth);
-  }
-
-  .nav-links a:hover {
-    color: var(--color-text);
-  }
-
-  .nav-links a:hover::after {
-    width: 100%;
+  .nav a:hover {
+    text-decoration: underline;
   }
 
   .back-link {
     display: inline-block;
-    color: var(--color-text-muted);
+    color: var(--fg-muted);
     text-decoration: none;
     font-size: 0.9375rem;
     margin-bottom: 2rem;
-    transition: all 0.3s var(--ease-smooth);
-    animation: fadeIn 0.7s var(--ease-smooth) 0.1s backwards;
+    transition: all 0.3s ease-out;
+    animation: fadeIn 0.7s ease-out 0.1s backwards;
   }
 
   .back-link:hover {
-    color: var(--color-accent);
+    color: var(--accent);
     transform: translateX(-4px);
   }
 
   .page-header {
     margin-bottom: 3rem;
-    animation: fadeInUp 0.7s var(--ease-smooth) 0.1s backwards;
+    animation: fadeInUp 0.7s ease-out 0.1s backwards;
   }
 
   .page-header h1 {
-    font-family: var(--font-serif);
     font-size: clamp(2rem, 5vw, 2.5rem);
     font-weight: 500;
     margin-bottom: 0.75rem;
@@ -166,12 +126,12 @@ const { posts } = Astro.props;
   }
 
   .tag-name {
-    color: var(--color-accent);
+    color: var(--accent);
     font-style: italic;
   }
 
   .page-header p {
-    color: var(--color-text-muted);
+    color: var(--fg-muted);
     font-size: 1.0625rem;
   }
 
@@ -199,37 +159,33 @@ const { posts } = Astro.props;
     display: block;
     text-decoration: none;
     padding: 1.75rem;
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    background: white;
-    transition: all 0.3s var(--ease-smooth);
+    border: 1px solid var(--border);
+    transition: all 0.3s ease-out;
   }
 
   .post-link:hover {
-    border-color: var(--color-accent);
+    border-color: var(--accent);
     transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
   }
 
   .post-date {
     display: block;
     font-size: 0.875rem;
-    color: var(--color-text-muted);
+    color: var(--fg-muted);
     margin-bottom: 0.75rem;
   }
 
   .post-title {
-    font-family: var(--font-serif);
     font-size: 1.5rem;
     font-weight: 500;
-    color: var(--color-text);
+    color: var(--fg);
     margin-bottom: 0.5rem;
     letter-spacing: -0.01em;
     line-height: 1.3;
   }
 
   .post-description {
-    color: var(--color-text-muted);
+    color: var(--fg-muted);
     line-height: 1.6;
     margin-bottom: 1rem;
   }
@@ -243,24 +199,23 @@ const { posts } = Astro.props;
 
   .tag {
     font-size: 0.8125rem;
-    color: var(--color-accent);
-    background: rgba(12, 74, 110, 0.08);
+    color: var(--accent);
+    background: rgba(139, 92, 246, 0.1);
     padding: 0.25rem 0.75rem;
-    border-radius: 4px;
     font-weight: 500;
   }
 
   .tag.active {
-    background: var(--color-accent);
-    color: white;
+    background: var(--accent);
+    color: var(--bg);
   }
 
   .read-more {
     display: inline-block;
     font-size: 0.9375rem;
-    color: var(--color-accent);
+    color: var(--accent);
     font-weight: 500;
-    transition: transform 0.3s var(--ease-smooth);
+    transition: transform 0.3s ease-out;
   }
 
   .post-link:hover .read-more {
@@ -300,16 +255,13 @@ const { posts } = Astro.props;
 
   @media (max-width: 640px) {
     .container {
-      padding: 1.5rem 1rem;
+      padding: 2rem 1.5rem;
     }
 
     .nav {
-      padding-bottom: 2rem;
-      margin-bottom: 2rem;
-    }
-
-    .nav-links {
-      gap: 1.5rem;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 3rem;
     }
 
     .page-header {

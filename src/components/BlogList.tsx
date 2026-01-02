@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
+import { formatDate } from "../utils/blog";
 
 interface Post {
   slug: string;
@@ -42,14 +43,6 @@ export default function BlogList({ posts, allTags }: BlogListProps) {
     if (!selectedTag) return posts;
     return posts.filter((post) => post.data.tags?.includes(selectedTag));
   }, [selectedTag, posts]);
-
-  const formatDate = (date: Date) => {
-    return new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }).format(new Date(date));
-  };
 
   const [isTransitioning, setIsTransitioning] = useState(false);
 

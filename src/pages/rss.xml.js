@@ -1,7 +1,6 @@
 import rss from "@astrojs/rss";
 import { getCollection } from "astro:content";
 
-// TODO: Check blog list design iterations
 // TODO: 404 page
 // TODO: sitemap
 // TODO: robots.txt
