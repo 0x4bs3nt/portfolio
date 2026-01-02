@@ -88,7 +88,7 @@ const currentYear = new Date().getFullYear();
     randomGlitch();
 
     // Floating animation for noise
-    const noise = document.querySelector(".noise");
+    const noise = document.querySelector(".noise") as HTMLElement;
     let position = 0;
 
     function animateNoise() {

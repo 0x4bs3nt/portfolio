@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
+
 import { formatDate } from "../utils/blog";
 
 interface Post {
@@ -18,45 +19,47 @@ interface BlogListProps {
 
 export default function BlogList({ posts, allTags }: BlogListProps) {
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // Read tag from URL on mount
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const tagParam = params.get("tag");
-    if (tagParam) {
-      setSelectedTag(tagParam);
-    }
-  }, []);
 
-  // Update URL when tag changes
-  useEffect(() => {
-    const url = new URL(window.location.href);
-    if (selectedTag) {
-      url.searchParams.set("tag", selectedTag);
-    } else {
-      url.searchParams.delete("tag");
-    }
-    window.history.replaceState({}, "", url);
-  }, [selectedTag]);
+    const tagParam = params.get("tag");
+
+    if (tagParam) setSelectedTag(tagParam);
+  }, []);
 
   const filteredPosts = useMemo(() => {
     if (!selectedTag) return posts;
+
     return posts.filter((post) => post.data.tags?.includes(selectedTag));
   }, [selectedTag, posts]);
 
-  const [isTransitioning, setIsTransitioning] = useState(false);
-
   const handleTagClick = (tag: string) => {
     setIsTransitioning(true);
+
     setTimeout(() => {
       if (selectedTag === tag) {
         setSelectedTag(null);
       } else {
         setSelectedTag(tag);
       }
+
       setTimeout(() => setIsTransitioning(false), 50);
     }, 150);
   };
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+
+    if (selectedTag) {
+      url.searchParams.set("tag", selectedTag);
+    } else {
+      url.searchParams.delete("tag");
+    }
+
+    window.history.replaceState({}, "", url);
+  }, [selectedTag]);
 
   return (
     <>

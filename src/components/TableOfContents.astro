@@ -7,9 +7,7 @@ interface Props {
 
 const { headings } = Astro.props;
 
-if (headings.length === 0) {
-  return null;
-}
+if (headings.length === 0) return null;
 ---
 
 <nav class="toc">
@@ -43,17 +41,14 @@ if (headings.length === 0) {
   document.addEventListener("DOMContentLoaded", () => {
     const tocLinks = document.querySelectorAll(".toc-link");
 
-    // Set initial active state based on URL hash
     updateActiveLink();
 
-    // Update active state when clicking TOC links
     tocLinks.forEach((link) => {
       link.addEventListener("click", () => {
         setTimeout(updateActiveLink, 0);
       });
     });
 
-    // Update active state when hash changes
     window.addEventListener("hashchange", updateActiveLink);
   });
 </script>

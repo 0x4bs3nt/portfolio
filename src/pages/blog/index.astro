@@ -1,11 +1,13 @@
 ---
 import { getCollection } from "astro:content";
+
 import Layout from "../../layouts/Layout.astro";
 import "../../components/BlogSearch.css";
 import { getAllTags } from "../../utils/blog";
 import BlogList from "../../components/BlogList";
 
 const allPosts = await getCollection("blog");
+
 const posts = allPosts
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
@@ -16,7 +18,7 @@ const currentYear = new Date().getFullYear();
 
 <Layout
   title="blog"
-  description="Technical writings on software engineering, security research, reverse engineering, and development practices."
+  description="technical writings on software engineering, security writeups and research."
 >
   <div class="container">
     <nav class="nav">

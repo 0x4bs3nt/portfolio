@@ -6,6 +6,7 @@ import { formatDate, getAllTags } from "../../../utils/blog";
 export async function getStaticPaths() {
   const allPosts = await getCollection("blog");
   const publishedPosts = allPosts.filter((post) => !post.data.draft);
+
   const allTags = getAllTags(publishedPosts);
 
   return allTags.map((tag) => ({
