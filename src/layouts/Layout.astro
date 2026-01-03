@@ -30,16 +30,6 @@ const fullTitle = title === "4bs3nt" ? title : `${title} | 4bs3nt`;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script is:inline>
-      // Disable view transitions on mobile ASAP
-      (function() {
-        if (window.matchMedia('(max-width: 768px)').matches) {
-          let preventTransition = function(e) { e.preventDefault(); };
-          document.addEventListener('astro:before-preparation', preventTransition, { capture: true });
-          document.addEventListener('astro:after-preparation', preventTransition, { capture: true });
-        }
-      })();
-    </script>
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
