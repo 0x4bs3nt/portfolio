@@ -77,6 +77,14 @@ const fullTitle = title === "4bs3nt" ? title : `${title} | 4bs3nt`;
       rel="stylesheet"
     />
     <ClientRouter />
+    <script is:inline>
+      // Disable view transitions on mobile to prevent scroll conflicts
+      if (typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches) {
+        document.addEventListener('astro:before-preparation', (event) => {
+          event.preventDefault();
+        }, { capture: true });
+      }
+    </script>
     <slot name="head" />
   </head>
   <body>
