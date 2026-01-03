@@ -119,6 +119,8 @@
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
   backface-visibility: hidden;
+  will-change: opacity, transform;
+  contain: layout style paint;
 }
 
 .posts.transitioning {

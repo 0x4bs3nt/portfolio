@@ -16,6 +16,13 @@ const allTags = getAllTags(posts);
 const currentYear = new Date().getFullYear();
 ---
 
+<script>
+  // Prevent scroll restoration issues on mobile
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+</script>
+
 <Layout
   title="blog"
   description="technical writings on software engineering, security writeups and research."
@@ -52,14 +59,21 @@ const currentYear = new Date().getFullYear();
 </Layout>
 
 <style>
+  html {
+    scroll-behavior: auto !important;
+  }
+
   .container {
     max-width: 900px;
     margin: 0 auto;
     padding: 3rem 2rem;
     min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
     overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
+    isolation: isolate;
   }
 
   .nav {

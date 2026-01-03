@@ -25,6 +25,17 @@ export default function BlogList({ posts, allTags }: BlogListProps) {
     const params = new URLSearchParams(window.location.search);
     const tagParam = params.get("tag");
     if (tagParam) setSelectedTag(tagParam);
+
+    // Prevent layout shifts on mobile viewport changes
+    let lastHeight = window.innerHeight;
+    const handleResize = () => {
+      // Only trigger on width changes, ignore height changes (mobile browser UI)
+      if (Math.abs(window.innerHeight - lastHeight) < 100) {
+        lastHeight = window.innerHeight;
+      }
+    };
+    window.addEventListener('resize', handleResize, { passive: true });
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const filteredPosts = useMemo(() => {
