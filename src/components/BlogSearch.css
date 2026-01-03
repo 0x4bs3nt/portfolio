@@ -116,11 +116,6 @@
   transition:
     opacity 0.15s ease-out,
     transform 0.15s ease-out;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  will-change: opacity, transform;
-  contain: layout style paint;
 }
 
 .posts.transitioning {
