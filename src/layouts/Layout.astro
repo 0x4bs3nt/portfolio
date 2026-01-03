@@ -1,5 +1,5 @@
 ---
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 
 interface Props {
   title?: string;
@@ -76,15 +76,7 @@ const fullTitle = title === "4bs3nt" ? title : `${title} | 4bs3nt`;
       href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <ViewTransitions fallback="none" />
-    <script>
-      // Disable view transitions on mobile to prevent scroll conflicts
-      if (window.matchMedia("(max-width: 768px)").matches) {
-        document.addEventListener("astro:before-preparation", (event) => {
-          event.preventDefault();
-        });
-      }
-    </script>
+    <ClientRouter />
     <slot name="head" />
   </head>
   <body>
