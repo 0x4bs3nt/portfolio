@@ -163,6 +163,9 @@ const currentYear = new Date().getFullYear();
 
     // Run on initial page load
     document.addEventListener("DOMContentLoaded", initScrollToTop);
+
+    // Run after view transitions (desktop only)
+    document.addEventListener("astro:page-load", initScrollToTop);
   </script>
 </Layout>
 
