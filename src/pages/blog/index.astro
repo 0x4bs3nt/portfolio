@@ -1,0 +1,148 @@
+---
+import { getCollection } from "astro:content";
+
+import Layout from "../../layouts/Layout.astro";
+import "../../components/BlogSearch.css";
+import { getAllTags } from "../../utils/blog";
+import BlogList from "../../components/BlogList";
+
+const allPosts = await getCollection("blog");
+
+const posts = allPosts
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const allTags = getAllTags(posts);
+const currentYear = new Date().getFullYear();
+---
+
+<Layout
+  title="blog"
+  description="technical writings on software engineering, security writeups and research."
+>
+  <div class="container">
+    <nav class="nav">
+      <a href="/">home</a>
+      <a href="/blog">blog</a>
+      <a href="/contact">contact</a>
+    </nav>
+
+    <div class="main">
+      <header class="header">
+        <h1>blog</h1>
+      </header>
+
+      <BlogList client:load posts={posts} allTags={allTags} />
+    </div>
+
+    <footer class="footer">
+      <p>
+        <a
+          href="https://github.com/0x4bs3nt"
+          target="_blank"
+          rel="noopener noreferrer">github</a
+        > • <a
+          href="https://x.com/0x4bs3nt"
+          target="_blank"
+          rel="noopener noreferrer">twitter</a
+        > • <a href="/rss.xml">rss</a> • © {currentYear}
+      </p>
+    </footer>
+  </div>
+</Layout>
+
+<style>
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nav {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    font-size: 1rem;
+  }
+
+  .nav a:first-child {
+    margin-right: auto;
+  }
+
+  .nav a {
+    color: var(--fg);
+    font-weight: 500;
+  }
+
+  .nav a:hover {
+    text-decoration: underline;
+  }
+
+  .main {
+    flex: 1;
+  }
+
+  .header {
+    margin-bottom: 1rem;
+  }
+
+  .header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .subtitle {
+    color: var(--fg-muted);
+    font-size: 0.95rem;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+  }
+
+  .tags-label {
+    color: var(--fg-muted);
+    font-size: 0.9rem;
+  }
+
+  .tags .tag {
+    color: var(--accent);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+  }
+
+  .footer {
+    margin-top: 6rem;
+    padding-top: 3rem;
+    color: var(--fg-muted);
+    font-size: 0.85rem;
+    text-align: center;
+  }
+
+  .footer a {
+    color: var(--fg-muted);
+  }
+
+  .footer a:hover {
+    color: var(--accent);
+  }
+
+  @media (max-width: 640px) {
+    .container {
+      padding: 2rem 1.5rem;
+    }
+
+    .nav {
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 3rem;
+    }
+  }
+</style>

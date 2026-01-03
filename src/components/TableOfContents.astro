@@ -1,0 +1,115 @@
+---
+import type { TocItem } from "../utils/blog";
+
+interface Props {
+  headings: TocItem[];
+}
+
+const { headings } = Astro.props;
+
+if (headings.length === 0) return null;
+---
+
+<nav class="toc">
+  <h3 class="toc-title">Table of Contents</h3>
+  <ul class="toc-list">
+    {
+      headings.map((heading) => (
+        <li class={`toc-item depth-${heading.depth}`}>
+          <a href={`#${heading.slug}`} class="toc-link">
+            {heading.text}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<script>
+  function updateActiveLink() {
+    const tocLinks = document.querySelectorAll(".toc-link");
+    const currentHash = window.location.hash;
+
+    tocLinks.forEach((link) => {
+      link.classList.remove("active");
+      if (link.getAttribute("href") === currentHash && currentHash) {
+        link.classList.add("active");
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const tocLinks = document.querySelectorAll(".toc-link");
+
+    updateActiveLink();
+
+    tocLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        setTimeout(updateActiveLink, 0);
+      });
+    });
+
+    window.addEventListener("hashchange", updateActiveLink);
+  });
+</script>
+
+<style>
+  .toc {
+    border-left: 2px solid var(--border);
+    padding-left: 1.25rem;
+  }
+
+  .toc-title {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    color: var(--fg-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+
+  .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+  }
+
+  .toc-item {
+    line-height: 1.4;
+  }
+
+  .toc-item.depth-3 {
+    padding-left: 1rem;
+    margin-top: -0.25rem;
+  }
+
+  .toc-item a {
+    color: var(--fg-muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.2s;
+    display: block;
+    line-height: 1.5;
+  }
+
+  .toc-item a:hover {
+    color: var(--accent);
+  }
+
+  .toc-item a.active {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  @media (max-width: 768px) {
+    .toc {
+      border-left: none;
+      border-top: 2px solid var(--border);
+      padding-left: 0;
+      padding-top: 1.5rem;
+    }
+  }
+</style>
