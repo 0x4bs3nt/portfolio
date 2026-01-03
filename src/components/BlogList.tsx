@@ -23,9 +23,7 @@ export default function BlogList({ posts, allTags }: BlogListProps) {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-
     const tagParam = params.get("tag");
-
     if (tagParam) setSelectedTag(tagParam);
   }, []);
 
