@@ -32,7 +32,7 @@ const currentYear = new Date().getFullYear();
         <h1>blog</h1>
       </header>
 
-      <BlogList client:load posts={posts} allTags={allTags} />
+      <BlogList client:idle posts={posts} allTags={allTags} />
     </div>
 
     <footer class="footer">

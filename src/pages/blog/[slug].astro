@@ -120,13 +120,24 @@ const currentYear = new Date().getFullYear();
   </button>
 
   <script>
+    let scrollHandler: (() => void) | null = null;
+    let clickHandler: (() => void) | null = null;
+
     function initScrollToTop() {
       const scrollToTopBtn = document.getElementById("scroll-to-top");
 
       if (!scrollToTopBtn) return;
 
-      // Remove existing listener if any
-      const newScrollHandler = () => {
+      // Remove existing listeners if any
+      if (scrollHandler) {
+        window.removeEventListener("scroll", scrollHandler);
+      }
+      if (clickHandler) {
+        scrollToTopBtn.removeEventListener("click", clickHandler);
+      }
+
+      // Create new scroll handler
+      scrollHandler = () => {
         if (window.scrollY > 300) {
           scrollToTopBtn.classList.add("visible");
         } else {
@@ -134,25 +145,26 @@ const currentYear = new Date().getFullYear();
         }
       };
 
-      // Show/hide button based on scroll position
-      window.addEventListener("scroll", newScrollHandler);
-
-      // Scroll to top on click
-      scrollToTopBtn.addEventListener("click", () => {
+      // Create new click handler
+      clickHandler = () => {
         window.scrollTo({
           top: 0,
           behavior: "smooth",
         });
-      });
+      };
+
+      // Add event listeners
+      window.addEventListener("scroll", scrollHandler, { passive: true });
+      scrollToTopBtn.addEventListener("click", clickHandler);
 
       // Initial check for scroll position
-      newScrollHandler();
+      scrollHandler();
     }
 
     // Run on initial page load
     document.addEventListener("DOMContentLoaded", initScrollToTop);
 
-    // Run after view transitions
+    // Run after view transitions (desktop only)
     document.addEventListener("astro:page-load", initScrollToTop);
   </script>
 </Layout>
