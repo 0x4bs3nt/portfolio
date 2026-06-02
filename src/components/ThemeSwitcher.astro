@@ -1,0 +1,292 @@
+---
+
+---
+
+<div class="theme-switcher" role="radiogroup" aria-label="Theme">
+  <div class="theme-track">
+    <span class="theme-indicator" aria-hidden="true"></span>
+    <button
+      data-theme-option="system"
+      class="theme-btn"
+      aria-label="System theme"
+      title="System"
+    >
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+        <line x1="8" y1="21" x2="16" y2="21"></line>
+        <line x1="12" y1="17" x2="12" y2="21"></line>
+      </svg>
+    </button>
+    <button
+      data-theme-option="light"
+      class="theme-btn"
+      aria-label="Light theme"
+      title="Light"
+    >
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+    </button>
+    <button
+      data-theme-option="dark"
+      class="theme-btn"
+      aria-label="Dark theme"
+      title="Dark"
+    >
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<style>
+  .theme-switcher {
+    position: relative;
+  }
+
+  .theme-track {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 3px;
+    border: 1px solid var(--border);
+    border-radius: 9999px;
+    background: var(--surface);
+  }
+
+  .theme-track.no-transition .theme-indicator {
+    transition: none !important;
+  }
+
+  .theme-indicator {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 9999px;
+    background: var(--accent);
+    opacity: 0.15;
+    transition:
+      transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.2s;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .theme-indicator::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 9999px;
+    background: var(--accent);
+    opacity: 0.08;
+    filter: blur(4px);
+  }
+
+  .theme-btn {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 9999px;
+    color: var(--fg-muted);
+    cursor: pointer;
+    transition: color 0.25s;
+  }
+
+  .theme-btn:hover {
+    color: var(--fg);
+  }
+
+  .theme-btn.active {
+    color: var(--accent);
+  }
+
+  .theme-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+
+  /* Indicator positions */
+  .theme-track[data-active-index="0"] .theme-indicator {
+    transform: translateX(0);
+  }
+
+  .theme-track[data-active-index="1"] .theme-indicator {
+    transform: translateX(calc(1.75rem + 2px));
+  }
+
+  .theme-track[data-active-index="2"] .theme-indicator {
+    transform: translateX(calc(2 * (1.75rem + 2px)));
+  }
+</style>
+
+<script>
+  const OPTION_ORDER = ["system", "light", "dark"];
+
+  function updateIndicator(choice: string) {
+    const tracks = document.querySelectorAll<HTMLElement>(".theme-track");
+    const idx = OPTION_ORDER.indexOf(choice);
+    tracks.forEach((track) => {
+      track.setAttribute("data-active-index", String(idx >= 0 ? idx : 0));
+    });
+  }
+
+  function applyThemeChoice(choice: string) {
+    let effective: string;
+    if (choice === "system") {
+      effective = window.matchMedia("(prefers-color-scheme: light)").matches
+        ? "light"
+        : "dark";
+    } else {
+      effective = choice;
+    }
+
+    document.documentElement.setAttribute("data-theme", effective);
+    document.documentElement.setAttribute("data-theme-preference", choice);
+
+    document.querySelectorAll("[data-theme-option]").forEach((b) => {
+      b.classList.toggle(
+        "active",
+        b.getAttribute("data-theme-option") === choice,
+      );
+    });
+
+    updateIndicator(choice);
+
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta)
+      meta.setAttribute(
+        "content",
+        effective === "light" ? "#ffffff" : "#000000",
+      );
+
+    return effective;
+  }
+
+  function initThemeSwitcher() {
+    const buttons = document.querySelectorAll<HTMLButtonElement>(
+      "[data-theme-option]",
+    );
+    const preference =
+      document.documentElement.getAttribute("data-theme-preference") ||
+      "system";
+
+    buttons.forEach((btn) => {
+      btn.classList.toggle(
+        "active",
+        btn.getAttribute("data-theme-option") === preference,
+      );
+    });
+
+    updateIndicator(preference);
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", (e: MouseEvent) => {
+        const choice = btn.getAttribute("data-theme-option")!;
+        localStorage.setItem("theme", choice);
+
+        let effective: string;
+        if (choice === "system") {
+          effective = window.matchMedia("(prefers-color-scheme: light)").matches
+            ? "light"
+            : "dark";
+        } else {
+          effective = choice;
+        }
+
+        const currentTheme =
+          document.documentElement.getAttribute("data-theme");
+
+        if (effective === currentTheme) {
+          applyThemeChoice(choice);
+          return;
+        }
+
+        const x = e.clientX;
+        const y = e.clientY;
+        const endRadius = Math.hypot(
+          Math.max(x, window.innerWidth - x),
+          Math.max(y, window.innerHeight - y),
+        );
+
+        if (!document.startViewTransition) {
+          applyThemeChoice(choice);
+          return;
+        }
+
+        document.documentElement.classList.add("theme-switching");
+
+        const transition = document.startViewTransition(() => {
+          applyThemeChoice(choice);
+        });
+
+        transition.ready.then(() => {
+          document.documentElement.animate(
+            {
+              clipPath: [
+                `circle(0px at ${x}px ${y}px)`,
+                `circle(${endRadius}px at ${x}px ${y}px)`,
+              ],
+            },
+            {
+              duration: 500,
+              easing: "ease-in-out",
+              pseudoElement: "::view-transition-new(root)",
+            },
+          );
+        });
+
+        transition.finished.then(() => {
+          document.documentElement.classList.remove("theme-switching");
+        });
+      });
+    });
+  }
+
+  document.addEventListener("astro:page-load", initThemeSwitcher);
+</script>

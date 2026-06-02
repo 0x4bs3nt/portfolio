@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import ThemeSwitcher from "../components/ThemeSwitcher.astro";
 
 const currentYear = new Date().getFullYear();
 ---
@@ -10,6 +11,7 @@ const currentYear = new Date().getFullYear();
       <a href="/">home</a>
       <a href="/blog">blog</a>
       <a href="/contact">contact</a>
+      <ThemeSwitcher />
     </nav>
 
     <header class="header">
@@ -37,8 +39,8 @@ const currentYear = new Date().getFullYear();
         </p>
         <br />
         <p>
-          i am open to freelance work and consulting. feel free to reach
-          out via <a href="/contact">contact page</a>.
+          i am open to freelance, contract work, full-time work and consulting.
+          feel free to reach out via <a href="/contact">contact page</a>.
         </p>
       </section>
     </main>
@@ -71,7 +73,9 @@ const currentYear = new Date().getFullYear();
 
   .nav {
     display: flex;
-    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
     margin-bottom: 5rem;
     font-size: 1rem;
   }
@@ -162,8 +166,7 @@ const currentYear = new Date().getFullYear();
     }
 
     .nav {
-      flex-direction: column;
-      gap: 0.75rem;
+      gap: 0.75rem 1rem;
       margin-bottom: 3rem;
     }
 
