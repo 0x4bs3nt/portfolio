@@ -1,0 +1,19 @@
+version: "0.5"
+
+processes:
+  install:
+    command: bun install
+    availability:
+      exit_on_end: false
+
+  dev:
+    command: bun run dev
+    depends_on:
+      install:
+        condition: process_completed_successfully
+    readiness_probe:
+      http_get:
+        host: localhost
+        port: 4321
+      initial_delay_seconds: 2
+      period_seconds: 5
