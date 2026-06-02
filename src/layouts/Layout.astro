@@ -77,6 +77,68 @@ const fullTitle = title === "4bs3nt" ? title : `${title} | 4bs3nt`;
       rel="stylesheet"
     />
     <ClientRouter />
+    <script is:inline>
+      (function () {
+        var ORDER = ["system", "light", "dark"];
+        function applyTheme() {
+          var stored = localStorage.getItem("theme") || "system";
+          var effective;
+          if (stored === "system") {
+            effective = window.matchMedia("(prefers-color-scheme: light)")
+              .matches
+              ? "light"
+              : "dark";
+          } else {
+            effective = stored;
+          }
+          document.documentElement.setAttribute("data-theme", effective);
+          document.documentElement.setAttribute(
+            "data-theme-preference",
+            stored,
+          );
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta)
+            meta.setAttribute(
+              "content",
+              effective === "light" ? "#ffffff" : "#000000",
+            );
+          var idx = ORDER.indexOf(stored);
+          if (idx < 0) idx = 0;
+          var tracks = document.querySelectorAll(".theme-track");
+          for (var i = 0; i < tracks.length; i++) {
+            tracks[i].classList.add("no-transition");
+            tracks[i].setAttribute("data-active-index", String(idx));
+          }
+          var buttons = document.querySelectorAll("[data-theme-option]");
+          for (var j = 0; j < buttons.length; j++) {
+            if (buttons[j].getAttribute("data-theme-option") === stored) {
+              buttons[j].classList.add("active");
+            } else {
+              buttons[j].classList.remove("active");
+            }
+          }
+          if (tracks.length) {
+            requestAnimationFrame(function () {
+              for (var i = 0; i < tracks.length; i++) {
+                tracks[i].classList.remove("no-transition");
+              }
+            });
+          }
+        }
+        applyTheme();
+        document.addEventListener("astro:after-swap", applyTheme);
+        window
+          .matchMedia("(prefers-color-scheme: light)")
+          .addEventListener("change", function () {
+            if (
+              !localStorage.getItem("theme") ||
+              localStorage.getItem("theme") === "system"
+            ) {
+              applyTheme();
+            }
+          });
+      })();
+    </script>
     <slot name="head" />
   </head>
   <body>
@@ -91,6 +153,20 @@ const fullTitle = title === "4bs3nt" ? title : `${title} | 4bs3nt`;
     --fg-muted: #9ca3af;
     --accent: #8b5cf6;
     --border: #374151;
+    --code-bg: rgba(255, 255, 255, 0.05);
+    --surface: rgba(255, 255, 255, 0.03);
+    color-scheme: dark;
+  }
+
+  html[data-theme="light"] {
+    --bg: #ffffff;
+    --fg: #1e1b2e;
+    --fg-muted: #6b6584;
+    --accent: #7c3aed;
+    --border: #9c92b4;
+    --code-bg: rgba(124, 58, 237, 0.07);
+    --surface: rgba(124, 58, 237, 0.04);
+    color-scheme: light;
   }
 
   * {
@@ -132,5 +208,37 @@ const fullTitle = title === "4bs3nt" ? title : `${title} | 4bs3nt`;
 
   a:hover {
     opacity: 0.8;
+  }
+
+  .astro-code,
+  .astro-code span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+    font-style: var(--shiki-dark-font-style) !important;
+    font-weight: var(--shiki-dark-font-weight) !important;
+  }
+
+  html[data-theme="light"] .astro-code {
+    color: var(--shiki-light) !important;
+    background-color: #f7f7f9 !important;
+    font-style: var(--shiki-light-font-style) !important;
+    font-weight: var(--shiki-light-font-weight) !important;
+  }
+
+  html[data-theme="light"] .astro-code span {
+    color: var(--shiki-light) !important;
+    background-color: transparent !important;
+    font-style: var(--shiki-light-font-style) !important;
+    font-weight: var(--shiki-light-font-weight) !important;
+  }
+
+  html.theme-switching::view-transition-old(root) {
+    animation: none;
+    z-index: -1;
+  }
+
+  html.theme-switching::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
   }
 </style>
